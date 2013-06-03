@@ -1,0 +1,144 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Real-Time Java on Raspberry Pi &mdash; RTJ on Raspberry Pi 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="RTJ on Raspberry Pi 1.0 documentation" href="#" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="#">RTJ on Raspberry Pi 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="real-time-java-on-raspberry-pi">
+<h1>Real-Time Java on Raspberry Pi<a class="headerlink" href="#real-time-java-on-raspberry-pi" title="Permalink to this headline">¶</a></h1>
+<p>This page will get you setup programming in Java on the Raspberry Pi. It also contains a few example tests for Java&#8217;s real time capabilites on the RPi, and instructions on how to get setup with a real-time Java VM, the Fiji VM.</p>
+<div class="section" id="setting-up-the-raspberry-pi">
+<h2>Setting up the Raspberry Pi<a class="headerlink" href="#setting-up-the-raspberry-pi" title="Permalink to this headline">¶</a></h2>
+<p>Once you have your Raspberry Pi HW, follow the instructions on the RPi&#8217;s <a class="reference external" href="http://www.raspberrypi.org/quick-start-guide">guide</a> for setting up Raspbian, a Debian distribution for the RPi.</p>
+<p>Now, install Java on the Pi. Run the following on the Pi (you need an internet connection):</p>
+<div class="highlight-python"><pre>sudo apt-get install openjdk-7-jre</pre>
+</div>
+<p>Note that this will only install the Java runtime on the Pi, since we will be compiling our code elsewhere. Now your Raspberry Pi is ready to run Java.</p>
+</div>
+<div class="section" id="building-the-rt-examples">
+<h2>Building the RT examples<a class="headerlink" href="#building-the-rt-examples" title="Permalink to this headline">¶</a></h2>
+<p>To build the examples in this tutorial, you will need a Raspberry Pi cross compiler. <a class="reference external" href="http://hertaville.com/2012/09/28/development-environment-raspberry-pi-cross-compiler/">Here</a> is a link for how to install.</p>
+<p>Once this is done, follow the instructions in the .java file for how to compile each example. The java examples are located in the Java directory. There are three examples:</p>
+<ol class="arabic simple">
+<li>Main directory: Generates a 500 Hz pulse on GPIO pin 0</li>
+<li>./GCStress: Does (1), while running three threads that stress the garbage collector</li>
+<li>./DDStress: Does (1), but does it through a random sequence of method dispatches, stressing the VM&#8217;s dynamic dispatch capabilities.</li>
+</ol>
+<p>Once built, simply copy the files to the Raspberry Pi (I recommend using ssh). Note that the GPIO library (wiringPi.so) has a hardcoded path at /home/pi/PiGpio/wiringPi.so. This isn&#8217;t the best implementation, but you will need to place the library there for it to work.</p>
+</div>
+<div class="section" id="running-the-rt-examples">
+<h2>Running the RT examples<a class="headerlink" href="#running-the-rt-examples" title="Permalink to this headline">¶</a></h2>
+<p>Running is easy. Simply run:</p>
+<div class="highlight-python"><pre>sudo java &lt;your_desired_example&gt;</pre>
+</div>
+<p>Note that root privileges are required to access the GPIO pins. The output pulse will be on GPIO pin 0. See the <a class="reference external" href="http://pi4j.com/usage.html">Pi4J</a> site for the GPIO pinouts.</p>
+<p>To measure and record the data, I used a TLA-704 Logic Analyzer. Something of this nature will be required.</p>
+</div>
+<div class="section" id="installing-and-running-with-the-fiji-vm">
+<h2>Installing and Running with the Fiji VM<a class="headerlink" href="#installing-and-running-with-the-fiji-vm" title="Permalink to this headline">¶</a></h2>
+<p>The Fiji VM is a real-time Java VM. Code examples for running the above real-time Java tests are included with this example (in the Fiji directory), but the Fiji compiler/runtime cannot be included here. Contact Fiji Systems <a class="reference external" href="http://fiji-systems.com/">here</a> for more info.</p>
+</div>
+<div class="section" id="installing-rtems">
+<h2>Installing RTEMS<a class="headerlink" href="#installing-rtems" title="Permalink to this headline">¶</a></h2>
+<p>RTEMS is a real-time operating system with basic support on the Raspberry Pi (as of this writing). If you wish to install RTEMS on the Pi, see this <a class="reference external" href="http://alanstechnotes.blogspot.com/2013/03/setting-up-rtems-development.html">article</a>. A GPIO example in RTEMS can be found in <a class="reference external" href="https://github.com/pficheux/raspberry_pi/tree/master/RTEMS/gpio_driver">this</a> GitHub repository.</p>
+<div class="toctree-wrapper compound">
+<ul class="simple">
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Real-Time Java on Raspberry Pi</a><ul>
+<li><a class="reference internal" href="#setting-up-the-raspberry-pi">Setting up the Raspberry Pi</a></li>
+<li><a class="reference internal" href="#building-the-rt-examples">Building the RT examples</a></li>
+<li><a class="reference internal" href="#running-the-rt-examples">Running the RT examples</a></li>
+<li><a class="reference internal" href="#installing-and-running-with-the-fiji-vm">Installing and Running with the Fiji VM</a></li>
+<li><a class="reference internal" href="#installing-rtems">Installing RTEMS</a><ul>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="#">RTJ on Raspberry Pi 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Brian Neely.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>
